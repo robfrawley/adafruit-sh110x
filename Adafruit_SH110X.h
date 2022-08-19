@@ -84,11 +84,16 @@ public:
   virtual ~Adafruit_SH110X(void) = 0;
 
   void display(void);
+  void setNormalContrastLevel(uint8_t contrast_level, bool apply_now = false);
+  void setDimmedContrastLevel(uint8_t contrast_level, bool apply_now = false);
+  void dim(bool dim = true);
 
 protected:
   /*! some displays are 'inset' in memory, so we have to skip some memory to
    * display */
   uint8_t _page_start_offset = 0;
+  uint8_t _normal_contrast_level = 0xFF;
+  uint8_t _dimmed_contrast_level = 0x00;
 
 private:
 };

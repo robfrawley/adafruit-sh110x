@@ -136,12 +136,10 @@ bool Adafruit_SH1107::begin(uint8_t addr, bool reset) {
 
   Adafruit_GrayOLED::_init(addr, reset);
 
-  setContrast(0x2F);
-
 #ifndef SH110X_NO_SPLASH
-  // the featherwing with 128x64 oled is 'rotated' so to make the splash right,
-  // rotate!
+  setNormalContrastLevel(0x4F, true);
   if (WIDTH == 64 && HEIGHT == 128) {
+    // the 128x64 featherwing oled is vertical so rotate for horizontal splash
     setRotation(1);
     drawBitmap((HEIGHT - splash2_width) / 2, (WIDTH - splash2_height) / 2,
                splash2_data, splash2_width, splash2_height, 1);
@@ -159,7 +157,7 @@ bool Adafruit_SH1107::begin(uint8_t addr, bool reset) {
       SH110X_DISPLAYOFF,               // 0xAE
       SH110X_SETDISPLAYCLOCKDIV, 0x51, // 0xd5, 0x51,
       SH110X_MEMORYMODE,               // 0x20
-      SH110X_SETCONTRAST, 0x4F,        // 0x81, 0x4F
+      SH110X_SETCONTRAST, _normal_contrast_level, // 0x81, 0x4F
       SH110X_DCDC, 0x8A,               // 0xAD, 0x8A
       SH110X_SEGREMAP,                 // 0xA0
       SH110X_COMSCANINC,               // 0xC0

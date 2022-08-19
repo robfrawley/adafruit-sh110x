@@ -248,3 +248,45 @@ void Adafruit_SH110X::display(void) {
   window_x2 = -1;
   window_y2 = -1;
 }
+
+/*!
+    @brief Set contrast level for the "normal" display state for use with dim().
+    @param contrast_level
+           The normal contrast level to use (use val between 0x00 and 0xFF).
+    @param apply_now
+           Whether to apply the passed contrast value immediately or not.
+*/
+void Adafruit_SH110X::setNormalContrastLevel(uint8_t contrast_level,
+                                             bool apply_now) {
+  _normal_contrast_level = contrast_level;
+
+  if (apply_now) {
+    dim(false);
+  }
+}
+
+/*!
+    @brief Set contrast level for the "dimmed" display state for use with dim().
+    @param contrast_level
+           The dimmed contrast level to use (use val between 0x00 and 0xFF).
+    @param apply_now
+           Whether to apply the passed contrast value immediately or not.
+*/
+void Adafruit_SH110X::setDimmedContrastLevel(uint8_t contrast_level,
+                                             bool apply_now) {
+  _dimmed_contrast_level = contrast_level;
+
+  if (apply_now) {
+    dim(true);
+  }
+}
+
+/*!
+    @brief Dim or un-dim display.
+    @param dim Bool dictates whether to dim (if true) or un-dim (if false)
+    @note  This has an immediate effect on the display, no need to call the
+           display() function -- buffer contents are not changed.
+*/
+void Adafruit_SH110X::dim(bool dim) {
+  setContrast(dim ? _dimmed_contrast_level : _normal_contrast_level);
+}

@@ -140,6 +140,7 @@ bool Adafruit_SH1106G::begin(uint8_t addr, bool reset) {
       2; // the SH1106 display we have found requires a small offset into memory
 
 #ifndef SH110X_NO_SPLASH
+  setNormalContrastLevel(0xFF, true);
   drawBitmap((WIDTH - splash2_width) / 2, (HEIGHT - splash2_height) / 2,
              splash2_data, splash2_width, splash2_height, 1);
 #endif
@@ -156,7 +157,7 @@ bool Adafruit_SH1106G::begin(uint8_t addr, bool reset) {
       SH110X_SEGREMAP + 1,             // 0xA1
       SH110X_COMSCANDEC,               // 0xC8
       SH110X_SETCOMPINS, 0x12,         // 0xDA, 0x12,
-      SH110X_SETCONTRAST, 0xFF,        // 0x81, 0xFF
+      SH110X_SETCONTRAST, _normal_contrast_level, // 0x81, 0xFF
       SH110X_SETPRECHARGE, 0x1F,       // 0xD9, 0x1F,
       SH110X_SETVCOMDETECT, 0x40,      // 0xDB, 0x40,
       0x33,                            // Set VPP to 9V
